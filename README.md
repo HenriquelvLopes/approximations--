@@ -1,40 +1,32 @@
 # Pi-Approximations
 
-Numerical approximations of the mathematical constant $\pi$ using fundamentally different computational approaches: the **Gauss–Legendre algorithm** and the **Monte Carlo method**.
+Numerical approximations of the mathematical constant $\pi$ using two different computational approaches: the **Gauss–Legendre algorithm** and the **Monte Carlo method**.
 
-The project explores both deterministic and stochastic approaches to numerical computation, with implementations in C and Python.
+The project explores both *deterministic* and *stochastic* approaches to numerical computation, with implementations in C and Python.
 
-The goal of this project is to investigate different numerical methods for approximating $\pi$ and to understand how their mathematical principles translate into computational algorithms.
+Methods studied:
 
-Two methods are studied:
+### **Gauss–Legendre algorithm**:
+a deterministic iterative algorithm with extremely fast convergence.
 
-Gauss–Legendre algorithm: a deterministic iterative algorithm with extremely fast convergence.
-Monte Carlo method: a stochastic method based on random sampling and geometric probability.
+### **Monte Carlo method**:
+a stochastic method based on random sampling and geometric probability.
 
 Although both methods approximate the same constant, their computational behavior is very different. Gauss–Legendre rapidly increases the number of correct digits with each iteration, while Monte Carlo convergence is considerably slower and depends on the statistical behavior of randomly generated samples.
 
 ## Methods
 
-# 1. Gauss–Legendre Algorithm
+### 1. Gauss–Legendre Algorithm
 
-The Gauss–Legendre algorithm is based on the arithmetic–geometric mean and generates sequences that rapidly converge toward a common value.
+The **Gauss–Legendre algorithm** is based on the arithmetic–geometric mean and generates sequences that rapidly converge toward a common value.
 
 The algorithm begins with
 
 $$
-a_0 = 1
-$$
-
-$$
-b_0 = \frac{1}{\sqrt{2}}
-$$
-
-$$
-t_0 = \frac{1}{4}
-$$
-
-$$
-p_0 = 1
+a_0 = 1,\qquad
+b_0 = \frac{1}{\sqrt{2}},\qquad
+t_0 = \frac{1}{4},\qquad
+p_0 = 1.
 $$
 
 At each iteration, the following quantities are calculated:
@@ -61,13 +53,13 @@ $$
 \pi \approx \frac{(a+b)^2}{4t}
 $$
 
-The implementation in C uses the **MPFR library** to perform arbitrary-precision floating-point arithmetic. This allows the program to calculate and store a very large number of digits of $\pi$ without relying on the precision limits of standard C floating-point types.
+The use of **MPFR libary** allows the program to work with arbitrary-precision floating-point numbers, rather than the fixed precision of standard C floating-point types.
 
 The current C implementation uses a precision of **400,000 bits**, performs **20 iterations**, and writes **100,000 decimal digits** of $\pi$ to a text file.
 
 A Python implementation of the Gauss–Legendre algorithm is planned.
 
-# 2. Monte Carlo Method
+### 2. Monte Carlo Method
 
 The Monte Carlo approximation is based on a simple geometric construction.
 
@@ -118,33 +110,18 @@ The current implementations use large numbers of random samples to investigate t
 
 ## Implementations
 
-The project currently contains implementations in C and Python.
+| Method | Language | Main tools | Samples / Iterations | Approx. digits |
+|--------|----------|------------|----------------------|-----------|
+| Gauss–Legendre | C | MPFR | 20 iterations | $10^5$ |
+| Monte Carlo | C | Standard library | $10^7$ samples | 6 |
+| Monte Carlo | Python | random | $10^{10}$ samples | 4 |
+| Gauss–Legendre | Python | Coming soon | — | — |
 
-# Gauss–Legendre
-
-# C
-
-* Uses MPFR for arbitrary-precision arithmetic.
-* Performs 20 iterations.
-* Generates a 100,000-digit representation of $\pi$.
-
-## Monte Carlo
-
-# C
-
-* Uses the standard C pseudo-random number generator.
-* Generates $10^7$ random points.
-
-# Python
-
-* Uses Python's `random` module.
-* Generates $10^{10}$ random points.
-
-# Deterministic vs. Stochastic Computation
+## Deterministic vs. Stochastic Computation
 
 One of the main motivations of the project is to compare two very different numerical approaches.
 
-The difference is particularly significant in the number of operations required to obtain additional digits of accuracy.
+The difference becomes particularly clear when considering how much computation is required to obtain additional digits of accuracy.
 
 Gauss–Legendre can obtain a very large number of correct digits with relatively few iterations. Monte Carlo, on the other hand, requires a very large number of samples because its statistical error decreases approximately as
 
@@ -156,29 +133,35 @@ where $N$ is the number of samples.
 
 Thus, increasing the number of Monte Carlo samples by a factor of 100 only improves the characteristic statistical error by approximately a factor of 10.
 
-# How to Use
+## How to Use
 
-Instructions for compiling and running each implementation will be added as the project structure is developed.
+Usage instructions are currently being organized as the project structure is finalized.
 
-C / Monte Carlo
-No external libraries required.
+### C / Monte Carlo
 
-C / Gauss–Legendre
-Requires MPFR.
+No external libraries are required.
 
-Python / Monte Carlo
-No external libraries required.
+### C / Gauss–Legendre
 
-Python / Gauss–Legendre
+Requires `MPFR`.
+
+### Python / Monte Carlo
+
+Uses Python's standard `random` module.
+
+### Python / Gauss–Legendre
+
 Coming soon.
 
-# References
+## References
 
-The mathematical background of the project is based on standard results from numerical analysis, probability, and the theory of elliptic integrals.
+The mathematical background of the project draws on standard results
+from numerical analysis and probability.
 
-Further references and explanations are documented in `DEVELOPMENT.md`.
+- M. E. J. Newman and G. T. Barkema,
+  *Monte Carlo Methods in Statistical Physics*,
+  Oxford University Press, 1999.
 
+Further references, implementation notes, and numerical experiments are
+documented in `DEVELOPMENT.md`.
 
-The mathematical background of the project is based on standard results from numerical analysis, probability, and the theory of elliptic integrals.
-
-Further references and explanations are documented in the DEVELOPMENT.md section of the repository.
